@@ -4,13 +4,10 @@ require 'open-uri'
 require 'multi_json'
 require 'awesome_print'
 require 'hashie'
-require 'date'
 
 class Post < Hashie::Mash
   def date
-    d=Date._strptime(self['date'],"%m月 %d, %Y %H:%M")
-    Time.utc(d[:year], d[:mon], d[:mday], d[:hour], d[:min], 
-         d[:sec], d[:sec_fraction], d[:zone])
+    Time.parse(self['published'])
   end
   
   def filename
@@ -18,16 +15,16 @@ class Post < Hashie::Mash
   end
   
   def slug
-    self["permalink"].split('/').last
+    self["link"].split('/').last
   end
   
   def body
-    self.content
+    self.content.content
   end
 end
 
 task :pull do
-  posts = MultiJson.decode(open("http://blog.ossxp.com/feed/?feed=json").read).map{|p| Post.new(p) }
+  posts = MultiJson.decode(open("http://pipes.yahoo.com/pipes/pipe.run?_id=50f63f64c70a2a032bdaa5dbb3458224&_render=json").read)['value']['items'].map{|p| Post.new(p) }
   
   posts.each do |p|
     if File.exists?(p.filename)

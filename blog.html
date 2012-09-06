@@ -1,10 +1,10 @@
 ---
 layout: master
-title: 博客
+title: Blog
 full_posts: 5
 ---
 
-<!--<a href='http://feeds2.feedburner.com/hzmook' class='float-right'><img src='/images/subscribe.png' alt='Subscribe to XML Feed'/></a>-->
+<a href='http://feeds2.feedburner.com/mbleigh' class='float-right'><img src='/images/subscribe.png' alt='Subscribe to XML Feed'/></a>
 
 {% for post in site.posts %}
   {% if forloop.index < page.full_posts %}
@@ -16,7 +16,7 @@ full_posts: 5
   </div>
   {% else %}
     {% if forloop.index == page.full_posts %}
-    <h3>更多博客</h3>
+    <h3>Older Posts</h3>
     <table class='post-list'>
     {% endif %}
     <tr>
